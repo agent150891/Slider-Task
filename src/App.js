@@ -1,26 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import Slider from "./components/Slider/Slider";
+import Cards from "./components/Cards/Cards";
+import styled from "styled-components";
+
+const dummyCard = {
+    description: "lorem ipsum dolor sit amet, lorem ipsum dolor sit amet, lorem ipsum dolor sit amet",
+    userName: "userName",
+    rate: "5.0",
+    rateCount: "260",
+    isLiked: true,
+    price: "500"
+};
+
+const dummyCards = [];
+
+for (let i = 0; i < 10; i++) {
+    dummyCards.push(dummyCard)
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [cards, setCards] = useState(dummyCards);
+
+    return (
+        <div style={{height: "100vh", paddingTop: "25px", backgroundColor: "lightgray"}}>
+            <CardsWrapper>
+                <Cards cards={cards}/>
+            </CardsWrapper>
+
+            <SliderWrapper>
+                <Slider cards={cards}/>
+            </SliderWrapper>
+        </div>
+    );
 }
+
+
+const CardsWrapper = styled.div`
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  
+  @media (max-width: 576px) {
+    height: 100vh;
+  }
+`;
+
+const SliderWrapper = styled.div`
+  padding-top: 50px;
+  padding-bottom: 25px;
+  width: 100%;
+  height: 300px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+`;
 
 export default App;
