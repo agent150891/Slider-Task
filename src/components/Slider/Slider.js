@@ -6,79 +6,117 @@ import {calculateCardsPerSlide} from "../../helpers";
 
 
 const Slider = ({cards}) => {
-    const [cardsPerSlide, setCardsPerSlide] = useState(5);
-    const [tempCardsPerSlide, setTempCardsPerSlide] = useState(5);
-    const [slide, setSlide] = useState([]);
+        const [cardsPerSlide, setCardsPerSlide] = useState(5);
+        const [tempCardsPerSlide, setTempCardsPerSlide] = useState(5);
+        const [slide, setSlide] = useState([]);
+        const [width, setWidth] = useState(0);
 
-    const carousel = useRef();
+        const carousel = useRef();
 
-    useEffect(() => {
-        window.addEventListener("resize", onResize);
+        useEffect(() => {
+            window.addEventListener("resize", onResize);
 
-        const cardsPerSlide = calculateCardsPerSlide(window.innerWidth);
+            const cardsPerSlide = calculateCardsPerSlide(window.innerWidth);
 
-        const slicedCards = [];
-        for (let i = 0; i < cards.length; i += cardsPerSlide) {
-            const tempArr = [];
-            for (let j = i; j < i + cardsPerSlide; j++) {
-                tempArr.push(cards[j])
-            }
-            slicedCards.push(tempArr)
-        }
-
-        setSlide(slicedCards);
-        setCardsPerSlide(tempCardsPerSlide);
-
-        return () => {
-            window.removeEventListener("resize", onResize)
-        }
-    }, []);
-
-
-    const onResize = () => {
-        const calculatedValue = calculateCardsPerSlide(window.innerWidth);
-
-        if (calculatedValue === 5 && tempCardsPerSlide !== 5) {
-            setTempCardsPerSlide(5);
-        } else if (calculatedValue !== cardsPerSlide) {
-            setTempCardsPerSlide(calculatedValue);
-        }
-    };
-
-
-    if (cardsPerSlide !== tempCardsPerSlide) {
-        const slicedCards = [];
-        for (let i = 0; i < cards.length; i += tempCardsPerSlide) {
-            const tempArr = [];
-            for (let j = i; j < i + tempCardsPerSlide; j++) {
-                tempArr.push(cards[j])
-            }
-            slicedCards.push(tempArr)
-        }
-
-        setSlide(slicedCards);
-        setCardsPerSlide(tempCardsPerSlide)
-    }
-
-
-    return (
-        <Wrapper>
-            <PrevArrow onClick={() => carousel.current.prev()}>
-                <Icon type="left" style={{fontSize: "35px"}}/>
-            </PrevArrow>
-            <Carousel ref={ref => carousel.current = ref}>
-                {slide.length ? slide.map((cards, index) => {
-                    return <Slide key={index} cards={cards}/>
-                }) : null
+            const slicedCards = [];
+            for (let i = 0; i < cards.length; i += cardsPerSlide) {
+                let counter = 0;
+                const tempArr = [];
+                for (let j = i; j < i + cardsPerSlide; j++) {
+                    if (cards[j]) {
+                        tempArr.push(cards[j]);
+                    } else {
+                        tempArr.push(cards[counter]);
+                        counter++;
+                    }
                 }
-            </Carousel>
+                slicedCards.push(tempArr)
+            }
 
-            <NextArrow onClick={() => carousel.current.next()}>
-                <Icon type="right" style={{fontSize: "35px"}}/>
-            </NextArrow>
-        </Wrapper>
-    );
-};
+            setSlide(slicedCards);
+            setCardsPerSlide(tempCardsPerSlide);
+
+            return () => {
+                window.removeEventListener("resize", onResize)
+            }
+        }, []);
+
+
+        const onResize = () => {
+            const calculatedValue = calculateCardsPerSlide(window.innerWidth);
+
+            if (calculatedValue !== tempCardsPerSlide) {
+                setTempCardsPerSlide(calculatedValue);
+            }
+
+            setWidth(window.innerWidth)
+        };
+
+
+        if (width > 1080 && cardsPerSlide !== 5) {
+
+            const slicedCards = [];
+            for (let i = 0; i < cards.length; i += 5) {
+                let counter = 0;
+
+                const tempArr = [];
+
+                for (let j = i; j < i + 5; j++) {
+                    if (cards[j]) {
+                        tempArr.push(cards[j]);
+                    } else {
+                        tempArr.push(cards[counter]);
+                        counter++;
+                    }
+                }
+                slicedCards.push(tempArr)
+            }
+
+            setSlide(slicedCards);
+            setCardsPerSlide(5);
+            setTempCardsPerSlide(5)
+        } else if (cardsPerSlide !== tempCardsPerSlide) {
+            let counter = 0;
+
+            const slicedCards = [];
+            for (let i = 0; i < cards.length; i += tempCardsPerSlide) {
+                const tempArr = [];
+                for (let j = i; j < i + tempCardsPerSlide; j++) {
+                    if (cards[j]) {
+                        tempArr.push(cards[j]);
+                    } else {
+                        tempArr.push(cards[counter]);
+                        counter++;
+                    }
+                }
+                slicedCards.push(tempArr)
+            }
+
+            setSlide(slicedCards);
+            setCardsPerSlide(tempCardsPerSlide)
+        }
+
+
+        return (
+            <Wrapper>
+                <PrevArrow onClick={() => carousel.current.prev()}>
+                    <Icon type="left" style={{fontSize: "35px"}}/>
+                </PrevArrow>
+
+                <Carousel ref={ref => carousel.current = ref}>
+                    {slide.length ? slide.map((cards, index) => {
+                        return <Slide key={index} cards={cards}/>
+                    }) : null
+                    }
+                </Carousel>
+
+                <NextArrow onClick={() => carousel.current.next()}>
+                    <Icon type="right" style={{fontSize: "35px"}}/>
+                </NextArrow>
+            </Wrapper>
+        );
+    }
+;
 
 const Wrapper = styled.div`
   width: 100%;

@@ -4,7 +4,7 @@ import Cards from "./components/Cards/Cards";
 import styled from "styled-components";
 
 const dummyCard = {
-    description: "lorem ipsum dolor sit amet, lorem ipsum dolor sit amet, lorem ipsum dolor sit amet",
+    description: "            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet atque consequuntur delectus dolor esse, ipsam iusto officiis possimus ut.\n",
     userName: "userName",
     rate: "5.0",
     rateCount: "260",

@@ -4,18 +4,16 @@ import {Icon} from "antd";
 
 const Card = ({card}) => {
 
-    let trimmedDescription = null;
-
     if (card) {
-        trimmedDescription = card.description.split(/( )/).slice(0, 18);
 
         return (
             <Wrapper>
                 <Image src="https://source.unsplash.com/random" alt=""/>
 
                 <Typography>
-                    <Description onClick={() => alert("Click on description")}>{trimmedDescription}</Description>
+                    <Description onClick={() => alert("Click on description")}>{card.description}</Description>
                     <RowWrapper>
+                        <Circle/>
                         <UserName onClick={() => alert("Click on User Name")}>{card.userName}</UserName>
                         <Rate>
                             <Icon
@@ -62,6 +60,7 @@ const Typography = styled.div`
   height: 125px;
   padding-left: 12px;
   padding-right: 12px;
+  padding-bottom: 10px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -69,16 +68,46 @@ const Typography = styled.div`
 `;
 
 const Description = styled.p`
-  margin-top: 10px;
+  margin-top: 7px;
   color: gray;
   cursor:pointer;
+  line-height: 17px;
+  margin-bottom: 0;
+  overflow: hidden;
+  position: relative;
+  height: 50px;
+  
+  &::after {
+      background: -moz-linear-gradient(left,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 57%, rgba(255,255,255,1) 68%, rgba(255,255,255,1) 99%);
+      background: -webkit-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 57%,rgba(255,255,255,1) 68%,rgba(255,255,255,1) 99%);
+      background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 57%,rgba(255,255,255,1) 68%,rgba(255,255,255,1) 99%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=1 );
+      height: 15px;
+      width: 60px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      content: '';
+  }
 `;
 
-const RowWrapper = styled.p`
+const RowWrapper = styled.div`
   width: 100%;
   height: 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  
+  &:last-child {
+    margin-top: -10px;
+  }
+`;
+
+const Circle = styled.div`
+  width: 8px;
+  height: 8px;
+  background-color: lightgray;
+  border-radius: 100px;
 `;
 
 const Delimiter = styled.div`
@@ -93,8 +122,9 @@ const Delimiter = styled.div`
 const UserName = styled.p`
   font-weight: bold;
   color: gray;
-    margin-bottom: 0;
-      cursor:pointer;
+  margin-bottom: 0;
+  margin-left: -20px;
+  cursor:pointer;
 `;
 
 const Rate = styled.p`
@@ -104,6 +134,7 @@ const Rate = styled.p`
 const Price = styled.p`
   color: green;
   font-weight: bold;
+  margin-bottom: 0;
 `;
 
 

@@ -1,5 +1,5 @@
 export const calculateCardsPerSlide = (width) => {
-    if (width > 1093) {
+    if (width > 1080) {
         return 5
     } else if (width > 893) {
         return 4;
