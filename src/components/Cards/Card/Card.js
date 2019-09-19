@@ -2,12 +2,14 @@ import React from 'react';
 import styled from "styled-components";
 import {Icon} from "antd";
 
-const Card = ({card}) => {
+const Card = ({card, selectedCard, setSelectedCard, index}) => {
 
     if (card) {
-
         return (
-            <Wrapper>
+            <Wrapper
+                onClick={() => setSelectedCard ? setSelectedCard(index) : null}
+                style={{border: selectedCard === index ? "1px solid blue" : "none"}}
+            >
                 <Image src="https://source.unsplash.com/random" alt=""/>
 
                 <Typography>

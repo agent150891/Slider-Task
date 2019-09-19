@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Carousel, Icon} from "antd";
 import Slide from "./Slide/Slide";
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import {calculateCardsPerSlide} from "../../helpers";
 
 
@@ -128,22 +128,25 @@ const Wrapper = styled.div`
   bottom: 0;
 `;
 
-const PrevArrow = styled.div`
-  top: calc(50% - 35px);
+const absoluteToTop = css`
   position: absolute;
-  height: 35px;
-  width: 35px;
-  z-index: 999;
+  z-index: 999;  
 `;
 
-const NextArrow = styled.div`
+const Arrow = styled.div`
+  ${absoluteToTop};
   top: calc(50% - 35px);
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+`;
+
+const NextArrow = styled(Arrow)`
   right: 0;
-  position: absolute;
-  height: 35px;
-  width: 35px;
-    z-index: 999;
 `;
 
+const PrevArrow = styled(Arrow)`
+  left: 0;
+`;
 
 export default Slider;

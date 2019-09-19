@@ -5,8 +5,9 @@ import styled from "styled-components";
 const Slide = ({cards}) => {
     return (
         <Wrapper>
-            {cards.length ? cards.map((card, index) => <Card key={index} card={card}/>)
-                : null
+            {cards.length ? cards.map((card, index) => (
+                <Card key={index} card={card} index={index}/>
+            )) : null
             }
         </Wrapper>
     );

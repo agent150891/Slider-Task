@@ -4,7 +4,7 @@ import Cards from "./components/Cards/Cards";
 import styled from "styled-components";
 
 const dummyCard = {
-    description: "            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet atque consequuntur delectus dolor esse, ipsam iusto officiis possimus ut.\n",
+    description: "Lorem ipsum dolor sit amet, consectetur iusto adipisicing elit. Aliquamam atque consequuntur delectus dolor esse, ipsam iusto officiis possimus ut.",
     userName: "userName",
     rate: "5.0",
     rateCount: "260",
@@ -19,12 +19,13 @@ for (let i = 0; i < 10; i++) {
 }
 
 function App() {
-    const [cards, setCards] = useState(dummyCards);
+    const [cards] = useState(dummyCards);
+    const [selectedCard, setSelectedCard] = useState(null);
 
     return (
         <div style={{height: "100vh", paddingTop: "25px", backgroundColor: "lightgray"}}>
             <CardsWrapper>
-                <Cards cards={cards}/>
+                <Cards cards={cards} selectedCard={selectedCard} setSelectedCard={setSelectedCard}/>
             </CardsWrapper>
 
             <SliderWrapper>

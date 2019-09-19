@@ -2,12 +2,19 @@ import React from 'react';
 import styled from "styled-components";
 import Card from "./Card/Card";
 
-const Cards = ({cards}) => {
+const Cards = ({cards, selectedCard, setSelectedCard}) => {
     return (
         <Wrapper>
-            {cards.length ? cards.map((card, index) => {
-                return <Card key={index} card={card}/>
-            }) : null}
+            {cards.length ? cards.map((card, index) => (
+                <Card
+                    key={index}
+                    index={index}
+                    selectedCard={selectedCard}
+                    setSelectedCard={setSelectedCard}
+                    card={card}
+                />
+            )) : null
+            }
         </Wrapper>
     );
 };
